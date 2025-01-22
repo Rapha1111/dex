@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title id="title">D-Exchange</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="container">
+    <!-- Header avec boutons "Acheter" et "Vendre" -->
+    <header>
+        <button class="switch-btn active" id="connect-wallet">Connect Wallet</button>
+        <p id="loading" hidden>Chargement...</p>
+      <div class="switch-container hidden" id="topmenu">
+        <button class="switch-btn active-buy" id="buyBtn">Acheter</button>
+        <button class="switch-btn" id="sellBtn">Vendre</button>
+      </div>
+    </header>
+
+    <!-- Fenêtre Achat (après avoir cliqué "Continuer" sur Acheter) -->
+    <div id="buyWindow" class="modal hidden">
+      <div class="modal-content">
+        <p id="name"></p>
+        <p><input type="number" placeholder="10" id="buyQuantityInput" value="1" class="touched"> <span id="Symbol">ACT</span></p><hr>
+        <p><input type="number" placeholder="0,00001" id="buyEthInput" value=""> ETH</p>
+        <p>Maximum à vendre : <span id="MaxAVendre">-</span> <span id="Symbol">ACT</span></p>
+        <button class="recalculate-btn" id="recalculateBuyBtn">Recalculer</button>
+        <button class="confirm-btn green" id="confirmBuyBtn" hidden>Acheter</button>
+      </div>
+    </div>
+
+    <!-- Fenêtre Vente (après avoir cliqué "Continuer" sur Vendre) -->
+    <div id="sellWindow" class="modal hidden">
+      <div class="modal-content">
+        <p id="name"></p>
+        <p>Vente de :</p>
+        <p><input type="number" placeholder="1" id="sellAmountInput"> <span id="Symbol">ACT</span></p>
+        <p>(Max : <span id="Balance">0</span> <span id="Symbol">ACT</span>)</p>
+        <hr>
+        <p>Au prix de :</p>
+        <p><input type="number" placeholder="0.00001" id="sellPriceInput"> ETH/<span id="Symbol">ACT</span></p>
+        <p>Prix actuel : <span id="actualPrice">-</span> ETH/<span id="Symbol">ACT</span></p>
+        <button class="approve-btn red" id="approveSellBtn">Approuver le contrat</button>
+        <button class="confirm-btn red" id="sellBtnModal" hidden>Vendre</button>
+        <p>Quantité approuée : <span id="approuvedQuantity">0</span> <span id="Symbol">ACT</span></p>
+      </div>
+    </div>
+  </div>
+  <script src="https://cdn.jsdelivr.net/npm/ethers@5.7.2/dist/ethers.umd.min.js"></script>
+  <script src="var.js"></script>
+  <script src="dex.js"></script>
+  <script src="app.js"></script>
+  
+</body>
+</html>

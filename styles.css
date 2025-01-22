@@ -1,0 +1,159 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  
+  body {
+    font-family: 'Arial', sans-serif;
+    background-color: #1b1b1b;
+    color: #fff;
+  }
+  
+  .container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+  }
+  
+  header {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 30px;
+  }
+  
+  .switch-container {
+    display: flex;
+    gap: 10px;
+  }
+  
+  .switch-btn {
+    background-color: #333;
+    color: #fff;
+    padding: 15px 30px;
+    border: none;
+    cursor: pointer;
+    font-size: 18px;
+    transition: background-color 0.3s ease;
+    border-radius: 5px;
+  }
+  
+  .switch-btn.active-sell {
+    background-color: #e74c3c;
+  }
+  .switch-btn.active-buy {
+    background-color: #27ae60;
+  }
+  
+  .switch-btn:hover {
+    background-color: #f1c40f;
+  }
+  
+  .form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    align-items: center;
+  }
+  
+  input {
+    padding: 10px;
+    width: 100%;
+    max-width: 400px;
+    border: 2px solid #444;
+    border-radius: 5px;
+    background-color: #333;
+    color: #fff;
+    font-size: 16px;
+  }
+  
+  input::placeholder {
+    color: #bbb;
+  }
+  
+  .continue-btn, .recalculate-btn, .confirm-btn, .approve-btn {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s ease;
+    margin-top: 20px;
+  }
+  
+  .continue-btn:hover, .recalculate-btn:hover, .confirm-btn:hover, .approve-btn:hover {
+    background-color: #e67e22;
+  }
+  
+  .continue-btn {
+    background-color: #f39c12;
+  }
+  
+  .recalculate-btn {
+    background-color: #27ae60;
+  }
+  
+  .green {
+    background-color: #27ae60;
+  }
+  
+  .green:hover {
+    background-color: #2ecc71;
+  }
+  
+  .red {
+    background-color: #e74c3c;
+  }
+  
+  .red:hover {
+    background-color: #c0392b;
+  }
+  
+  .hidden {
+    display: none;
+  }
+  
+  .modal {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: #222;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.7);
+    z-index: 1000;
+    width: 80%;
+    max-width: 500px;
+  }
+  
+  .modal-content {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    align-items: center;
+  }
+  
+  .open-contract-btn {
+    padding: 15px 30px;
+    background-color: #2980b9;
+    color: #fff;
+    border: none;
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 5px;
+  }
+  
+  .open-contract-btn:hover {
+    background-color: #3498db;
+  }
+  
+  @media (max-width: 768px) {
+    .switch-container {
+      flex-direction: column;
+    }
+  }
+  
+  .touched{
+    border-color: #27ae60;
+  }
