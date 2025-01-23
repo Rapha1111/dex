@@ -173,7 +173,7 @@ async function updateAll(onglet=0){
     } else {
         sellWindow.classList.remove("hidden")
     }
-    
+    AouV()
 }
 
 function updateData(){

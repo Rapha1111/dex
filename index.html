@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Token Selector</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        .window {
+            margin: 50px auto;
+            padding: 20px;
+            max-width: 500px;
+            background-color: #333;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+        }
+
+        .input-container {
+            margin-bottom: 20px;
+        }
+
+        .scrollable-buttons {
+            max-height: 300px;
+            overflow-y: auto;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .button-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px;
+            background-color: #444;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .button-item img {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+        }
+
+        .button-item:hover {
+            background-color: #555;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="window">
+            <div class="input-container">
+                <input 
+                    type="text" 
+                    id="token-address" 
+                    placeholder="Enter ERC20 Token Address..." 
+                />
+                <button class="continue-btn" id="go-button">Go</button>
+            </div>
+            <div class="scrollable-buttons">
+                <div class="button-item" data-token="0x1291070C5f838DCCDddc56312893d3EfE9B372a8">
+                    <img src="https://cryptologos.cc/logos/usd-coin-usdc-logo.png" alt="Token Logo">
+                    <span>USDC</span>
+                </div>
+                <div class="button-item" data-token="0xbDeaD2A70Fe794D2f97b37EFDE497e68974a296d">
+                    <img src="https://s2.coinmarketcap.com/static/img/coins/200x200/825.png" alt="Token Logo">
+                    <span>USDT</span>
+                </div>
+                <div class="button-item" data-token="0x29f2D40B0605204364af54EC677bD022dA425d03">
+                    <img src="https://directus.messari.io/assets/c9f0edce-7a0d-40b8-abe2-a7c1964171e2" alt="Token Logo">
+                    <span>WBTC</span>
+                </div>
+                <div class="button-item" data-token="0xcf185f2F3Fe19D82bFdcee59E3330FD7ba5f27ce">
+                    <img src="https://s2.coinmarketcap.com/static/img/coins/200x200/1027.png" alt="Token Logo">
+                    <span>Kerry Token</span>
+                </div>
+                
+                <div class="button-item" data-token="0x242cC1E06d32595fEa07E34441FA02FDCa9543d0">
+                    <img src="raphcoin.jpg" alt="Token Logo">
+                    <span>RaphCoin</span>
+                </div>
+                <div class="button-item" data-token="0xB25762Af97e2Bc69324f559dBc8Ac9572fFE4CdC">
+                    <img src="minedgold.jpg" alt="Token Logo">
+                    <span>mined GOLD</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Add event listeners to buttons and input
+        document.getElementById('go-button').addEventListener('click', () => {
+            const tokenAddress = document.getElementById('token-address').value.trim();
+            if (tokenAddress) {
+                window.location.href = `pay.html?token=${encodeURIComponent(tokenAddress)}`;
+            }
+        });
+
+        document.querySelectorAll('.button-item').forEach(button => {
+            button.addEventListener('click', () => {
+                const tokenAddress = button.getAttribute('data-token');
+                window.location.href = `pay.html?token=${encodeURIComponent(tokenAddress)}`;
+            });
+        });
+    </script>
+</body>
+</html>
