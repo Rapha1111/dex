@@ -121,7 +121,7 @@ async function connectMetaMask() {
         // Check the network
         const currentChainId = await ethereum.request({ method: "eth_chainId" });
         if (currentChainId !== SEPOLIA_CHAIN_ID) {
-            await switchToSepolia();
+            //await switchToSepolia();
         }
 
         // Display the game section
