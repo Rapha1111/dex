@@ -145,7 +145,7 @@ async function connectMetaMask() {
     }
 }
 
-async function updateAll(){
+async function updateAll(onglet=0){
     document.getElementById("loading").hidden=false
     document.getElementById("topmenu").classList.add("hidden")
     buyWindow.classList.add("hidden")
@@ -168,7 +168,12 @@ async function updateAll(){
     document.getElementById("Balance").innerHTML=userBalance/10**decimals
     document.getElementById("loading").hidden=true
     document.getElementById("topmenu").classList.remove("hidden")
-    buyWindow.classList.remove("hidden")
+    if (onglet==0){
+        buyWindow.classList.remove("hidden")
+    } else {
+        sellWindow.classList.remove("hidden")
+    }
+    
 }
 
 function updateData(){
@@ -181,7 +186,7 @@ function updateData(){
     document.getElementById("approuvedQuantity").innerHTML=QteApprouvee/10**decimals
 }
 
-async function validTransact(transact){
+async function validTransact(transact, onglet=0){
     document.getElementById("loading").innerHTML="Transaction en cours..."
     document.getElementById("loading").hidden=false
     document.getElementById("topmenu").classList.add("hidden")
@@ -189,7 +194,7 @@ async function validTransact(transact){
     sellWindow.classList.add("hidden")
     const receipt = await transact.wait();
     document.getElementById("loading").innerHTML="Chargement..."
-    updateAll()
+    updateAll(onglet)
 }
 
 function AouV(){
@@ -204,18 +209,20 @@ function AouV(){
 }
 
 async function Approuve(){
-    vente=parseFloat(document.getElementById("sellAmountInput").value)*10**decimals
+    const inputValue = document.getElementById("sellAmountInput").value;
+    const vente = ethers.BigNumber.from(ethers.utils.parseUnits(inputValue, decimals));
     const sale = await tokencontract.approve(CONTRACT_ADDRESS, vente)
-    validTransact(sale)
+    validTransact(sale, 1)
 }
 
 async function Sell(){
-    vente=parseFloat(document.getElementById("sellAmountInput").value)*10**decimals
+    const inputValue = document.getElementById("sellAmountInput").value;
+    const vente = ethers.BigNumber.from(ethers.utils.parseUnits(inputValue, decimals));
     ChoosenPrice=ethers.utils.parseEther(document.getElementById("sellPriceInput").value)
     const sale = await contract.sell(tokenAddress, vente, ChoosenPrice)
-    validTransact(sale)
+    validTransact(sale, 1)
 }
-etat=0
+etat=1
 function touchToken(){
     etat=1
     document.getElementById("buyQuantityInput").classList.add("touched")
@@ -232,18 +239,24 @@ function touchETH(){
     document.getElementById("confirmBuyBtn").hidden=true
 }
 
+function formatToDecimal(number) {
+    return number.toLocaleString("en-US", { useGrouping: false, maximumFractionDigits: 20 });
+}
+
 async function recalculate(){
     if (etat==1){
-        eth = await contract.priceFor(tokenAddress, document.getElementById("buyQuantityInput").value*10**decimals)
+        const inputValue = document.getElementById("buyQuantityInput").value;
+        const prix = ethers.BigNumber.from(ethers.utils.parseUnits(inputValue, decimals));
+        eth = await contract.priceFor(tokenAddress, prix)
         document.getElementById("buyQuantityInput").classList.remove("touched")
-        document.getElementById("buyEthInput").value=eth/10**18
+        document.getElementById("buyEthInput").value=formatToDecimal(eth/10**18)
         document.getElementById("recalculateBuyBtn").hidden=true
         document.getElementById("confirmBuyBtn").hidden=false
         etat=0
     } else {
         eth = await contract.priceWith(tokenAddress, ethers.utils.parseEther(document.getElementById("buyEthInput").value))
         document.getElementById("buyEthInput").classList.remove("touched")  
-        document.getElementById("buyQuantityInput").value=eth/10**decimals
+        document.getElementById("buyQuantityInput").value=formatToDecimal(eth/10**decimals)
         document.getElementById("recalculateBuyBtn").hidden=true
         document.getElementById("confirmBuyBtn").hidden=false
         etat=0
