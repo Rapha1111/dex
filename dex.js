@@ -19,7 +19,9 @@ var QteApprouvee=0;
 var userBalance=0;
 
 
-const CONTRACT_ADDRESS = "0x18f8B885025726A463E68b7B3065359C86D1Ea18";
+const CONTRACT_ADDRESS = "0xF4c67ceC35287d4CfC8E568f507A2aae1d7D470E";
+//const CONTRACT_ADDRESS = "0x18f8B885025726A463E68b7B3065359C86D1Ea18";
+
 const SEPOLIA_CHAIN_ID = "0xAA36A7"; // Hexadecimal for 11155111
 
 // Check if MetaMask is available
@@ -155,7 +157,8 @@ async function updateAll(onglet=0){
     decimals= await tokencontract.decimals();
     TokenName= await tokencontract.name();
     window.title.innerHTML=TokenName+" : D-Exchange"
-    totalAVendre = await contract.avaible(tokenAddress);
+    frais= await contract.frais_transact();
+    totalAVendre = await contract.available(tokenAddress);
     try{
         price = await contract.priceFor(tokenAddress, 10**decimals);
     } catch{
@@ -184,6 +187,8 @@ function updateData(){
     document.getElementById("actualPrice").innerHTML=price/10**18
     document.getElementById("buyEthInput").value=price/10**18
     document.getElementById("approuvedQuantity").innerHTML=QteApprouvee/10**decimals
+    document.getElementById("frais").innerHTML=frais/10**18
+    
 }
 
 async function validTransact(transact, onglet=0){
@@ -254,7 +259,7 @@ async function recalculate(){
         document.getElementById("confirmBuyBtn").hidden=false
         etat=0
     } else {
-        eth = await contract.priceWith(tokenAddress, ethers.utils.parseEther(document.getElementById("buyEthInput").value))
+        eth = await contract.quantityWith(tokenAddress, ethers.utils.parseEther(document.getElementById("buyEthInput").value))
         document.getElementById("buyEthInput").classList.remove("touched")  
         document.getElementById("buyQuantityInput").value=formatToDecimal(eth/10**decimals)
         document.getElementById("recalculateBuyBtn").hidden=true
@@ -264,7 +269,7 @@ async function recalculate(){
 }
 
 async function buy(){
-    vente=ethers.utils.parseEther(document.getElementById("buyEthInput").value)
+    vente=ethers.utils.parseEther((parseFloat(document.getElementById("buyEthInput").value)+frais/10**18).toString())
     try{
     const sale = await contract.buy(tokenAddress, {value:vente})
     validTransact(sale)
@@ -288,3 +293,8 @@ document.getElementById("recalculateBuyBtn").addEventListener("click", recalcula
 document.getElementById("confirmBuyBtn").addEventListener("click", buy)
 
 connectWalletButton.addEventListener("click", connectMetaMask);
+
+//pour withdraw (admin only)
+function withdraw(){
+    contract.withdraw()
+}
